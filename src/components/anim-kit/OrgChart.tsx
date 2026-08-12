@@ -5,38 +5,66 @@ import { animate, motion, useMotionValue } from "framer-motion";
 import { ScrambleText } from "./ScrambleText";
 import { usePrefersReducedMotion } from "./useReducedMotion";
 
-type Node = { id: string; en: string; hi: string; children?: Node[] };
+export type OrgNode = { id: string; en: string; hi: string; children?: OrgNode[] };
+type Node = OrgNode;
 
-const ORG: Node = {
+// A representative slice of the real seven-tier structure (Shakha < Mandal <
+// Nagar < Zila < Vibhaag < Sambhaag < Prant), compressed to 4 levels for a
+// usable interactive chart. Prant/Zila names are real administrative units;
+// leaf "Shakha" nodes are deliberately generic placeholders, NOT claims
+// about specific real local branches — see /organisation for the full,
+// sourced tier table and current national shakha count.
+export const DEFAULT_ORG: OrgNode = {
   id: "root",
-  en: "Central Council",
-  hi: "केंद्रीय परिषद",
+  en: "Central Leadership",
+  hi: "केंद्रीय नेतृत्व",
   children: [
     {
-      id: "n-zone",
-      en: "North Zone",
-      hi: "उत्तर क्षेत्र",
+      id: "delhi-prant",
+      en: "Delhi Prant",
+      hi: "दिल्ली प्रांत",
       children: [
-        { id: "delhi", en: "Delhi Shakha", hi: "दिल्ली शाखा" },
-        { id: "chd", en: "Chandigarh Shakha", hi: "चंडीगढ़ शाखा" },
+        {
+          id: "delhi-zila",
+          en: "Delhi Zila",
+          hi: "दिल्ली ज़िला",
+          children: [
+            { id: "delhi-shakha-1", en: "Shakha (example)", hi: "शाखा (उदाहरण)" },
+            { id: "delhi-shakha-2", en: "Shakha (example)", hi: "शाखा (उदाहरण)" },
+          ],
+        },
       ],
     },
     {
-      id: "w-zone",
-      en: "West Zone",
-      hi: "पश्चिम क्षेत्र",
+      id: "maharashtra-prant",
+      en: "Maharashtra Prant",
+      hi: "महाराष्ट्र प्रांत",
       children: [
-        { id: "mum", en: "Mumbai Shakha", hi: "मुंबई शाखा" },
-        { id: "pune", en: "Pune Shakha", hi: "पुणे शाखा" },
+        {
+          id: "nagpur-zila",
+          en: "Nagpur Zila",
+          hi: "नागपुर ज़िला",
+          children: [{ id: "nagpur-shakha", en: "Shakha (example)", hi: "शाखा (उदाहरण)" }],
+        },
+        {
+          id: "mumbai-zila",
+          en: "Mumbai Zila",
+          hi: "मुंबई ज़िला",
+          children: [{ id: "mumbai-shakha", en: "Shakha (example)", hi: "शाखा (उदाहरण)" }],
+        },
       ],
     },
     {
-      id: "s-zone",
-      en: "South Zone",
-      hi: "दक्षिण क्षेत्र",
+      id: "kerala-prant",
+      en: "Kerala Prant",
+      hi: "केरल प्रांत",
       children: [
-        { id: "chn", en: "Chennai Shakha", hi: "चेन्नई शाखा" },
-        { id: "blr", en: "Bengaluru Shakha", hi: "बेंगलुरु शाखा" },
+        {
+          id: "kochi-zila",
+          en: "Kochi Zila",
+          hi: "कोच्चि ज़िला",
+          children: [{ id: "kochi-shakha", en: "Shakha (example)", hi: "शाखा (उदाहरण)" }],
+        },
       ],
     },
   ],
@@ -63,8 +91,8 @@ function layout(node: Node, depth: number, parentId: string | null, offset: { x:
   return [{ ...node, x, y: depth * (NODE_H + ROW_GAP), depth, parentId }, ...childResults];
 }
 
-function buildTree(): Positioned[] {
-  const nodes = layout(ORG, 0, null, { x: 0 });
+function buildTree(root: Node): Positioned[] {
+  const nodes = layout(root, 0, null, { x: 0 });
   const xs = nodes.map((n) => n.x);
   const centerOffset = (Math.min(...xs) + Math.max(...xs)) / 2 + NODE_W / 2;
   return nodes.map((n) => ({ ...n, x: n.x - centerOffset }));
@@ -83,9 +111,9 @@ function isHiddenByCollapse(n: Positioned, all: Positioned[], collapsed: Set<str
  * Explorable org hierarchy: drag to pan, wheel or +/- to zoom, click a node
  * to fly the camera to it and expand/collapse its children in place.
  */
-export function OrgChart() {
+export function OrgChart({ data = DEFAULT_ORG }: { data?: OrgNode }) {
   const reduced = usePrefersReducedMotion();
-  const nodes = useMemo(buildTree, []);
+  const nodes = useMemo(() => buildTree(data), [data]);
   const [collapsed, setCollapsed] = useState<Set<string>>(new Set());
   const [focused, setFocused] = useState<string | null>(null);
   const viewportRef = useRef<HTMLDivElement>(null);

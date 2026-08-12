@@ -12,6 +12,7 @@ type Props = {
   hi: string;
   as?: keyof JSX.IntrinsicElements;
   className?: string;
+  style?: React.CSSProperties;
 };
 
 /**
@@ -19,7 +20,7 @@ type Props = {
  * plain crossfade — used by the language switch, hero, timeline, and
  * org-chart nodes so the whole site shares one bilingual-transition language.
  */
-export function ScrambleText({ en, hi, as: Tag = "span", className }: Props) {
+export function ScrambleText({ en, hi, as: Tag = "span", className, style }: Props) {
   const { lang } = useLanguage();
   const reduced = usePrefersReducedMotion();
   const target = lang === "en" ? en : hi;
@@ -64,5 +65,9 @@ export function ScrambleText({ en, hi, as: Tag = "span", className }: Props) {
     };
   }, [target, lang, reduced]);
 
-  return <Tag className={className}>{display}</Tag>;
+  return (
+    <Tag className={className} style={style}>
+      {display}
+    </Tag>
+  );
 }

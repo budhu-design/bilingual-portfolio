@@ -3,8 +3,6 @@
 import "@/components/anim-kit/kit.css";
 import {
   Hero,
-  LanguageProvider,
-  LanguageSwitch,
   MagneticButton,
   OrgChart,
   Reveal,
@@ -38,17 +36,11 @@ function DemoBody() {
 
   return (
     <div className="anim-kit min-h-screen bg-[#0d0d10]">
-      <header className="fixed inset-x-0 top-0 z-50 flex items-center justify-between px-6 py-4 sm:px-10">
-        <span className="text-sm font-medium tracking-wide text-[#f6f3ec]/80">anim-kit</span>
-        <div className="flex items-center gap-3">
-          {reduced && (
-            <span className="rounded-full border border-white/15 px-3 py-1 text-[10px] uppercase tracking-widest text-[#f6f3ec]/50">
-              Reduced motion on
-            </span>
-          )}
-          <LanguageSwitch />
+      {reduced && (
+        <div className="fixed bottom-4 right-4 z-50 rounded-full border border-white/15 bg-[#0d0d10]/90 px-3 py-1 text-[10px] uppercase tracking-widest text-[#f6f3ec]/50 backdrop-blur">
+          Reduced motion on
         </div>
-      </header>
+      )}
 
       <Hero />
 
@@ -130,9 +122,5 @@ function DemoBody() {
 }
 
 export default function AnimationsDemoPage() {
-  return (
-    <LanguageProvider>
-      <DemoBody />
-    </LanguageProvider>
-  );
+  return <DemoBody />;
 }

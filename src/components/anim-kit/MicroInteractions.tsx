@@ -8,10 +8,12 @@ import { usePrefersReducedMotion } from "./useReducedMotion";
 export function MagneticButton({
   children,
   className,
+  style,
   onClick,
 }: {
   children: React.ReactNode;
   className?: string;
+  style?: React.CSSProperties;
   onClick?: () => void;
 }) {
   const reduced = usePrefersReducedMotion();
@@ -21,7 +23,7 @@ export function MagneticButton({
 
   if (reduced) {
     return (
-      <button onClick={onClick} className={className}>
+      <button onClick={onClick} className={className} style={style}>
         {children}
       </button>
     );
@@ -31,7 +33,7 @@ export function MagneticButton({
     <motion.button
       ref={ref}
       onClick={onClick}
-      style={{ x, y }}
+      style={{ ...style, x, y }}
       onMouseMove={(e) => {
         const r = ref.current!.getBoundingClientRect();
         x.set((e.clientX - r.left - r.width / 2) * 0.35);
@@ -49,7 +51,15 @@ export function MagneticButton({
 }
 
 /** A card that tilts in 3D toward the cursor with a soft light following underneath. */
-export function TiltCard({ children, className }: { children: React.ReactNode; className?: string }) {
+export function TiltCard({
+  children,
+  className,
+  style,
+}: {
+  children: React.ReactNode;
+  className?: string;
+  style?: React.CSSProperties;
+}) {
   const reduced = usePrefersReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
   const rx = useSpring(0, { stiffness: 220, damping: 20 });
@@ -63,13 +73,17 @@ export function TiltCard({ children, className }: { children: React.ReactNode; c
   );
 
   if (reduced) {
-    return <div className={className}>{children}</div>;
+    return (
+      <div className={className} style={style}>
+        {children}
+      </div>
+    );
   }
 
   return (
     <motion.div
       ref={ref}
-      style={{ rotateX: rx, rotateY: ry, transformPerspective: 900 }}
+      style={{ ...style, rotateX: rx, rotateY: ry, transformPerspective: 900 }}
       onMouseMove={(e) => {
         const r = ref.current!.getBoundingClientRect();
         const px = (e.clientX - r.left) / r.width;

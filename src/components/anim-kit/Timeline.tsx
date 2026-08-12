@@ -8,7 +8,9 @@ import { usePrefersReducedMotion } from "./useReducedMotion";
 
 if (typeof window !== "undefined") gsap.registerPlugin(ScrollTrigger);
 
-const EVENTS = [
+export type TimelineEvent = { year: string; en: string; hi: string };
+
+const DEFAULT_EVENTS: TimelineEvent[] = [
   { year: "2019", en: "Founded the studio", hi: "स्टूडियो की स्थापना" },
   { year: "2021", en: "First flagship product shipped", hi: "पहला प्रमुख उत्पाद लॉन्च" },
   { year: "2023", en: "Expanded to 12 shakha centers", hi: "१२ शाखा केंद्रों तक विस्तार" },
@@ -20,7 +22,7 @@ const EVENTS = [
  * position (not just "revealed once") so it reads as being drawn by the
  * scroll itself. Each node blurs/rises in independently as it enters view.
  */
-export function Timeline() {
+export function Timeline({ events = DEFAULT_EVENTS }: { events?: TimelineEvent[] }) {
   const rootRef = useRef<HTMLDivElement>(null);
   const pathRef = useRef<SVGPathElement>(null);
   const reduced = usePrefersReducedMotion();
@@ -83,18 +85,32 @@ export function Timeline() {
         <path
           ref={pathRef}
           d="M2 0 L2 100"
-          stroke="#c8a24e"
+          stroke="var(--timeline-accent, #c8a24e)"
           strokeWidth="2"
           fill="none"
           vectorEffect="non-scaling-stroke"
         />
       </svg>
       <ul className="space-y-16">
-        {EVENTS.map((e) => (
+        {events.map((e) => (
           <li key={e.year} className="tl-node relative pl-16">
-            <span className="absolute left-6 top-1 h-3 w-3 -translate-x-1/2 rounded-full bg-[#c8a24e] ring-4 ring-[#0d0d10]" />
-            <span className="text-xs uppercase tracking-widest text-[#c8a24e]">{e.year}</span>
-            <ScrambleText as="p" en={e.en} hi={e.hi} className="mt-1 text-lg text-[#f6f3ec]" />
+            <span
+              className="absolute left-6 top-1 h-3 w-3 -translate-x-1/2 rounded-full ring-4"
+              style={{
+                background: "var(--timeline-accent, #c8a24e)",
+                ["--tw-ring-color" as string]: "var(--timeline-ring, #0d0d10)",
+              }}
+            />
+            <span className="text-xs uppercase tracking-widest" style={{ color: "var(--timeline-accent, #c8a24e)" }}>
+              {e.year}
+            </span>
+            <ScrambleText
+              as="p"
+              en={e.en}
+              hi={e.hi}
+              className="mt-1 text-lg"
+              style={{ color: "var(--timeline-text, #f6f3ec)" } as React.CSSProperties}
+            />
           </li>
         ))}
       </ul>

@@ -33,3 +33,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# one-off ops/scratch scripts (may reference personal info) — never committed
+_bootstrap_*
+_test_*

@@ -2,6 +2,7 @@ import { redirect, notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { getSessionProfile } from "@/lib/members/session";
 import { tierForPoints, totalPoints } from "@/lib/members/ranking";
+import { DIRECTIONS } from "@/lib/directions";
 import type { MemberProject, Profile, Subgroup } from "@/lib/members/types";
 
 export default async function MemberProfilePage({ params }: { params: { id: string } }) {
@@ -35,47 +36,53 @@ export default async function MemberProfilePage({ params }: { params: { id: stri
   const tier = tierForPoints(points);
 
   return (
-    <div className="mx-auto max-w-2xl px-6 py-16 sm:px-10">
-      <a href="/portal/members" className="text-sm text-[#c8a24e] underline">
-        ← Back to directory
-      </a>
-      <div className="mt-4 flex items-center gap-4">
-        {member.photo_url ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={member.photo_url} alt="" className="h-16 w-16 rounded-full object-cover" />
-        ) : (
-          <div className="h-16 w-16 rounded-full bg-[#c8a24e]/20" />
-        )}
-        <div>
-          <h1 className="text-2xl font-semibold text-[#f6f3ec]">{member.official_name}</h1>
-          <p className="text-sm text-[#f6f3ec]/50">
-            {subgroup?.name ?? "No subgroup"} · {tier.name} ({points} pts)
-          </p>
+    <div style={DIRECTIONS.civicTech as React.CSSProperties} className="min-h-screen">
+      <div className="mx-auto max-w-2xl px-6 py-16 sm:px-10">
+        <a href="/portal/members" className="text-sm underline" style={{ color: "var(--accent)" }}>
+          ← Back to directory
+        </a>
+        <div className="mt-4 flex items-center gap-4">
+          {member.photo_url ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={member.photo_url} alt="" className="h-16 w-16 rounded-full object-cover" />
+          ) : (
+            <div className="h-16 w-16 rounded-full" style={{ background: "rgba(232,121,44,0.15)" }} />
+          )}
+          <div>
+            <h1 className="text-2xl font-semibold" style={{ fontFamily: "var(--heading-font)" }}>
+              {member.official_name}
+            </h1>
+            <p className="text-sm opacity-60">
+              {subgroup?.name ?? "No subgroup"} · {tier.name} ({points} pts)
+            </p>
+          </div>
         </div>
-      </div>
 
-      <div className="mt-6 rounded-2xl border border-white/10 bg-white/[0.03] p-5 text-sm text-[#f6f3ec]/70">
-        <p>Work type: {member.work_type || "—"}</p>
-        <p className="mt-1">Education: {member.education || "—"}</p>
-        <p className="mt-1">Role / contribution: {member.role_contribution || "—"}</p>
-      </div>
+        <div className="mt-6 rounded-2xl border p-5 text-sm opacity-80" style={{ borderColor: "var(--border)", background: "#fff" }}>
+          <p>Work type: {member.work_type || "—"}</p>
+          <p className="mt-1">Education: {member.education || "—"}</p>
+          <p className="mt-1">Role / contribution: {member.role_contribution || "—"}</p>
+        </div>
 
-      <div className="mt-8">
-        <h2 className="mb-3 text-lg font-semibold text-[#f6f3ec]">Projects & activities</h2>
-        {projects.length === 0 ? (
-          <p className="text-sm text-[#f6f3ec]/50">No projects yet.</p>
-        ) : (
-          <ul className="grid gap-3 sm:grid-cols-2">
-            {projects.map((p) => (
-              <li key={p.id} className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
-                <p className="text-xs uppercase tracking-widest text-[#c8a24e]">
-                  {new Date(p.activity_date).toLocaleDateString()}
-                </p>
-                <p className="mt-1 font-medium text-[#f6f3ec]">{p.title}</p>
-              </li>
-            ))}
-          </ul>
-        )}
+        <div className="mt-8">
+          <h2 className="mb-3 text-lg font-semibold" style={{ fontFamily: "var(--heading-font)" }}>
+            Projects &amp; activities
+          </h2>
+          {projects.length === 0 ? (
+            <p className="text-sm opacity-60">No projects yet.</p>
+          ) : (
+            <ul className="grid gap-3 sm:grid-cols-2">
+              {projects.map((p) => (
+                <li key={p.id} className="rounded-xl border p-4" style={{ borderColor: "var(--border)", background: "#fff" }}>
+                  <p className="text-xs uppercase tracking-widest" style={{ color: "var(--accent)" }}>
+                    {new Date(p.activity_date).toLocaleDateString()}
+                  </p>
+                  <p className="mt-1 font-medium">{p.title}</p>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
       </div>
     </div>
   );
