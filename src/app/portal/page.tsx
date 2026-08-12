@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { getSessionProfile } from "@/lib/members/session";
 import { tierForPoints, nextTier, totalPoints } from "@/lib/members/ranking";
@@ -14,7 +15,7 @@ export default async function PortalDashboard() {
     return (
       <div style={DIRECTIONS.civicTech as React.CSSProperties} className="min-h-screen">
         <div className="mx-auto max-w-md px-6 py-24 text-center sm:px-10">
-          <p className="text-xs uppercase tracking-[0.3em]" style={{ color: "var(--accent)" }}>
+          <p className="text-sm uppercase tracking-[0.3em]" style={{ color: "var(--accent)" }}>
             Members Portal
           </p>
           <h1 className="mt-2 text-2xl font-semibold" style={{ fontFamily: "var(--heading-font)" }}>
@@ -60,7 +61,7 @@ export default async function PortalDashboard() {
       <div className="mx-auto max-w-3xl px-6 py-16 sm:px-10">
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-xs uppercase tracking-[0.3em]" style={{ color: "var(--accent)" }}>
+            <p className="text-sm uppercase tracking-[0.3em]" style={{ color: "var(--accent)" }}>
               Members Portal
             </p>
             <h1 className="mt-2 text-3xl font-semibold" style={{ fontFamily: "var(--heading-font)" }}>
@@ -74,7 +75,7 @@ export default async function PortalDashboard() {
 
         <div className="mt-8 grid gap-4 sm:grid-cols-2">
           <div className="rounded-2xl border p-5" style={{ borderColor: "var(--border)", background: "#fff" }}>
-            <p className="text-xs uppercase tracking-widest" style={{ color: "var(--accent)" }}>
+            <p className="text-sm uppercase tracking-widest" style={{ color: "var(--accent)" }}>
               Affiliation
             </p>
             <p className="mt-2 text-sm opacity-80">
@@ -86,7 +87,7 @@ export default async function PortalDashboard() {
           </div>
 
           <div className="rounded-2xl border p-5" style={{ borderColor: "var(--accent2)", background: "rgba(29,158,117,0.08)" }}>
-            <p className="text-xs uppercase tracking-widest" style={{ color: "var(--accent2)" }}>
+            <p className="text-sm uppercase tracking-widest" style={{ color: "var(--accent2)" }}>
               Recognition
             </p>
             <p className="mt-2 text-2xl font-semibold">
@@ -106,9 +107,9 @@ export default async function PortalDashboard() {
           <p>Role / contribution: {profile.role_contribution || "—"}</p>
           <p className="mt-3 border-t pt-3 text-xs opacity-60" style={{ borderColor: "var(--border)" }}>
             Religion, gender, and date of birth are on file but only visible to you and administrators — see{" "}
-            <a href="/portal/settings" className="underline">
+            <Link href="/portal/settings" className="underline">
               account settings
-            </a>{" "}
+            </Link>{" "}
             to review them.
           </p>
         </div>
@@ -118,13 +119,13 @@ export default async function PortalDashboard() {
             <h2 className="text-lg font-semibold" style={{ fontFamily: "var(--heading-font)" }}>
               My projects &amp; activities
             </h2>
-            <a
+            <Link
               href={`/portal/members?subgroup=${profile.subgroup_current_id ?? ""}`}
               className="text-sm underline"
               style={{ color: "var(--accent)" }}
             >
               View subgroup members →
-            </a>
+            </Link>
           </div>
           {projects.length === 0 ? (
             <p className="text-sm opacity-60">
@@ -141,7 +142,7 @@ export default async function PortalDashboard() {
                       <img src={p.photos[0]} alt="" className="h-36 w-full object-cover" />
                     )}
                     <div className="p-4">
-                      <p className="text-xs uppercase tracking-widest" style={{ color: "var(--accent)" }}>
+                      <p className="text-sm uppercase tracking-widest" style={{ color: "var(--accent)" }}>
                         {new Date(p.activity_date).toLocaleDateString()} · +{p.points} pts
                       </p>
                       <p className="mt-1 font-medium">{p.title}</p>

@@ -167,7 +167,7 @@ export function OrgChart({ data = DEFAULT_ORG }: { data?: OrgNode }) {
   return (
     <div className="select-none">
       <div className="mb-3 flex items-center justify-between gap-4">
-        <p className="text-xs uppercase tracking-widest text-[#c8a24e]">
+        <p className="text-sm uppercase tracking-widest text-[#c8a24e]">
           Drag to pan · scroll or +/– to zoom · click a node to focus
         </p>
         <div className="flex gap-2">

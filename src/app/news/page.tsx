@@ -26,7 +26,7 @@ export default function NewsPage() {
       <section className="px-6 py-20 sm:px-10">
         <div className="mx-auto max-w-2xl">
           <p
-            className="text-xs uppercase tracking-[0.1em]"
+            className="text-sm uppercase tracking-[0.1em]"
             style={{ color: "var(--accent)", fontFamily: "var(--mono-font)" }}
           >
             News & Events
@@ -55,7 +55,7 @@ export default function NewsPage() {
                     <p className="text-2xl font-semibold" style={{ fontFamily: "var(--heading-font)" }}>
                       {m.name} <span className="text-base opacity-50">{m.hi}</span>
                     </p>
-                    <span className="text-xs uppercase tracking-widest opacity-50">{m.lang}</span>
+                    <span className="text-sm uppercase tracking-widest opacity-50">{m.lang}</span>
                   </div>
                   <p className="mt-2 opacity-70">{m.desc}</p>
                   <p className="mt-2 text-sm underline" style={{ color: "var(--accent)" }}>

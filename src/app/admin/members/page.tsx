@@ -75,7 +75,7 @@ export default async function AdminMembersPage() {
 
   return (
     <div className="mx-auto max-w-3xl px-6 py-16 sm:px-10">
-      <p className="text-xs uppercase tracking-[0.3em] text-[#c8a24e]">Admin</p>
+      <p className="text-sm uppercase tracking-[0.3em] text-[#c8a24e]">Admin</p>
       <h1 className="mt-2 text-2xl font-semibold text-[#f6f3ec]">Member applications</h1>
 
       <h2 className="mb-3 mt-8 text-sm font-semibold uppercase tracking-wide text-[#f6f3ec]/70">

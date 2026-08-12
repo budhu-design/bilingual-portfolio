@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { requireAdmin } from "@/lib/members/admin";
 import { assignMemberAction, removeMemberAction } from "../../actions";
@@ -30,9 +31,9 @@ export default async function ManageProjectPage({ params }: { params: { id: stri
 
   return (
     <div className="mx-auto max-w-2xl px-6 py-16 sm:px-10">
-      <a href="/admin/projects" className="text-sm text-[#c8a24e] underline">
+      <Link href="/admin/projects" className="text-sm text-[#c8a24e] underline">
         ← All projects
-      </a>
+      </Link>
       <h1 className="mt-2 text-2xl font-semibold text-[#f6f3ec]">{project.title}</h1>
       <p className="text-sm text-[#f6f3ec]/50">{project.points} points per participant</p>
 

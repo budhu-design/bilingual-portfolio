@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { signUpAction } from "../actions";
 import { PrivacyNotice } from "@/components/portal/PrivacyNotice";
@@ -20,7 +21,7 @@ export default async function SignupPage({
   return (
     <div style={DIRECTIONS.civicTech as React.CSSProperties} className="min-h-screen">
       <div className="mx-auto max-w-2xl px-6 py-16 sm:px-10">
-        <p className="text-xs uppercase tracking-[0.3em]" style={{ color: "var(--accent)" }}>
+        <p className="text-sm uppercase tracking-[0.3em]" style={{ color: "var(--accent)" }}>
           Members Portal
         </p>
         <h1 className="mt-2 text-3xl font-semibold sm:text-4xl" style={{ fontFamily: "var(--heading-font)" }}>
@@ -28,9 +29,9 @@ export default async function SignupPage({
         </h1>
         <p className="mt-2 text-sm opacity-70">
           Already have an account?{" "}
-          <a href="/portal/login" className="underline" style={{ color: "var(--accent)" }}>
+          <Link href="/portal/login" className="underline" style={{ color: "var(--accent)" }}>
             Log in
-          </a>
+          </Link>
         </p>
 
         {searchParams.error && (

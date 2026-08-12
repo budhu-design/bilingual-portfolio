@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { requireAdmin } from "@/lib/members/admin";
 import { createProjectAction, deleteProjectAction } from "../actions";
@@ -16,7 +17,7 @@ export default async function AdminProjectsPage() {
 
   return (
     <div className="mx-auto max-w-3xl px-6 py-16 sm:px-10">
-      <p className="text-xs uppercase tracking-[0.3em] text-[#c8a24e]">Admin</p>
+      <p className="text-sm uppercase tracking-[0.3em] text-[#c8a24e]">Admin</p>
       <h1 className="mt-2 text-2xl font-semibold text-[#f6f3ec]">Projects & activities</h1>
 
       <details className="mt-6 rounded-2xl border border-white/10 bg-white/[0.03] p-5">
@@ -59,7 +60,7 @@ export default async function AdminProjectsPage() {
           <div key={p.id} className="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
             <div className="flex items-start justify-between">
               <div>
-                <p className="text-xs uppercase tracking-widest text-[#c8a24e]">
+                <p className="text-sm uppercase tracking-widest text-[#c8a24e]">
                   {new Date(p.activity_date).toLocaleDateString()} · {p.points} pts ·{" "}
                   {subgroupMap.get(p.subgroup_id ?? "") ?? "Org-wide"}
                 </p>
@@ -71,9 +72,9 @@ export default async function AdminProjectsPage() {
                 <button className="text-xs text-[#a63d40] underline">Delete</button>
               </form>
             </div>
-            <a href={`/admin/projects/${p.id}`} className="mt-3 inline-block text-xs text-[#c8a24e] underline">
+            <Link href={`/admin/projects/${p.id}`} className="mt-3 inline-block text-xs text-[#c8a24e] underline">
               Manage participants →
-            </a>
+            </Link>
           </div>
         ))}
         {projects?.length === 0 && <p className="text-sm text-[#f6f3ec]/50">No projects yet.</p>}

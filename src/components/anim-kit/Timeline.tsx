@@ -127,11 +127,6 @@ export function Timeline({
                   className="mt-1 text-lg"
                   style={{ color: "var(--timeline-text, #f6f3ec)" } as React.CSSProperties}
                 />
-                {clickable && (
-                  <span className="mt-1 inline-block text-xs opacity-50" style={{ color: "var(--timeline-accent, #c8a24e)" }}>
-                    Tap for more →
-                  </span>
-                )}
               </Tag>
             </li>
           );

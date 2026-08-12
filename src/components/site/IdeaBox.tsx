@@ -67,7 +67,7 @@ export function IdeaBox({
               ✕
             </button>
             {eyebrow && (
-              <p className="pr-8 text-xs uppercase tracking-[0.2em]" style={{ color: "var(--accent)" }}>
+              <p className="pr-8 text-sm uppercase tracking-[0.2em]" style={{ color: "var(--accent)" }}>
                 {eyebrow}
               </p>
             )}
@@ -79,14 +79,5 @@ export function IdeaBox({
         </motion.div>
       )}
     </AnimatePresence>
-  );
-}
-
-/** Small "tap to learn more" affordance for cards that open an IdeaBox. */
-export function ExpandHint({ label = "Tap for more" }: { label?: string }) {
-  return (
-    <p className="mt-3 inline-flex items-center gap-1 text-xs opacity-50" style={{ color: "var(--accent)" }}>
-      {label} <span aria-hidden>→</span>
-    </p>
   );
 }

@@ -47,6 +47,11 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const trail = useAnimationControls();
   const lockRef = useRef(false);
 
+  // Keep the <html lang> attribute in sync for accessibility/assistive tech.
+  useEffect(() => {
+    document.documentElement.lang = lang;
+  }, [lang]);
+
   // Restore a previously chosen language on mount (client-only — SSR always
   // renders "en" so hydration matches, then this corrects it once) so
   // navigating/reloading doesn't silently reset the user's choice back to

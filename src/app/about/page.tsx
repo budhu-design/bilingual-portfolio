@@ -87,7 +87,7 @@ export default function AboutPage() {
     >
       <section className="px-6 py-16 sm:px-10">
         <div className="mx-auto max-w-3xl">
-          <p className="text-xs uppercase tracking-[0.3em]" style={{ color: "var(--accent2)" }}>
+          <p className="text-sm uppercase tracking-[0.3em]" style={{ color: "var(--accent2)" }}>
             <ScrambleText en="About · History" hi="परिचय · इतिहास" />
           </p>
           <h1 className="mt-2 text-4xl font-semibold italic" style={{ fontFamily: "var(--heading-font)" }}>

@@ -10,7 +10,7 @@ export default async function SettingsPage() {
   return (
     <div style={DIRECTIONS.civicTech as React.CSSProperties} className="min-h-screen">
       <div className="mx-auto max-w-lg px-6 py-16 sm:px-10">
-        <p className="text-xs uppercase tracking-[0.3em]" style={{ color: "var(--accent)" }}>
+        <p className="text-sm uppercase tracking-[0.3em]" style={{ color: "var(--accent)" }}>
           Members Portal
         </p>
         <h1 className="mt-2 text-2xl font-semibold" style={{ fontFamily: "var(--heading-font)" }}>

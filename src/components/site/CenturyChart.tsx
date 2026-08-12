@@ -55,15 +55,18 @@ export function CenturyChart() {
 
   return (
     <div ref={rootRef} className="mx-auto max-w-4xl px-6 py-14 sm:px-10">
-      <p className="mb-6 text-xs uppercase tracking-[0.3em]" style={{ color: "var(--accent)" }}>
+      <p className="mb-6 text-sm uppercase tracking-[0.3em]" style={{ color: "var(--accent)" }}>
         <ScrambleText en="A century, at a glance" hi="एक सदी, एक नज़र में" />
       </p>
-      <div className="relative h-1.5 rounded-full" style={{ background: "rgba(43,32,25,0.12)" }}>
-        <div
-          ref={barRef}
-          className="absolute inset-y-0 left-0 w-full origin-left rounded-full"
-          style={{ background: "var(--accent)" }}
-        />
+      <div
+        className="relative h-1.5"
+        style={{
+          background: "rgba(43,32,25,0.12)",
+          maskImage: "linear-gradient(to right, transparent, black 6%, black 94%, transparent)",
+          WebkitMaskImage: "linear-gradient(to right, transparent, black 6%, black 94%, transparent)",
+        }}
+      >
+        <div ref={barRef} className="absolute inset-y-0 left-0 w-full origin-left" style={{ background: "var(--accent)" }} />
       </div>
       <div className="relative mt-4 grid grid-cols-2 gap-4 text-sm sm:grid-cols-5">
         {MILESTONES.map((m) => (

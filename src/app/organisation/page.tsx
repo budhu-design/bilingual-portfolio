@@ -88,7 +88,7 @@ export default function OrganisationPage() {
     >
       <section className="px-6 py-16 sm:px-10">
         <div className="mx-auto max-w-4xl">
-          <p className="text-xs uppercase tracking-[0.3em]" style={{ color: "var(--accent)" }}>
+          <p className="text-sm uppercase tracking-[0.3em]" style={{ color: "var(--accent)" }}>
             <ScrambleText en="Organisational structure" hi="संगठनात्मक संरचना" />
           </p>
           <h1 className="mt-2 text-4xl font-bold" style={{ fontFamily: "var(--heading-font)" }}>
@@ -107,28 +107,22 @@ export default function OrganisationPage() {
               className="rounded-xl border p-5 text-left transition-shadow hover:shadow-lg"
               style={{ borderColor: "var(--border)", background: "#fff" }}
             >
-              <p className="text-xs uppercase tracking-widest" style={{ color: "var(--accent)" }}>
+              <p className="text-sm uppercase tracking-widest" style={{ color: "var(--accent)" }}>
                 Sarsanghchalak (chief)
               </p>
               <p className="mt-1 text-lg font-medium">Mohan Bhagwat</p>
               <p className="text-xs opacity-60">Since 21 March 2009 · 6th chief</p>
-              <p className="mt-2 text-xs opacity-50" style={{ color: "var(--accent)" }}>
-                Tap for more →
-              </p>
             </button>
             <button
               onClick={() => setActiveId("hosabale")}
               className="rounded-xl border p-5 text-left transition-shadow hover:shadow-lg"
               style={{ borderColor: "var(--border)", background: "#fff" }}
             >
-              <p className="text-xs uppercase tracking-widest" style={{ color: "var(--accent2)" }}>
+              <p className="text-sm uppercase tracking-widest" style={{ color: "var(--accent2)" }}>
                 Sarkaryavah (general secretary)
               </p>
               <p className="mt-1 text-lg font-medium">Dattatreya Hosabale</p>
               <p className="text-xs opacity-60">Handles administration with the Kendriya Karyakari Mandal</p>
-              <p className="mt-2 text-xs opacity-50" style={{ color: "var(--accent2)" }}>
-                Tap for more →
-              </p>
             </button>
           </div>
         </div>
@@ -166,7 +160,11 @@ export default function OrganisationPage() {
                 </thead>
                 <tbody>
                   {TIERS.map((t) => (
-                    <tr key={t.level} className="border-t" style={{ borderColor: "var(--border)" }}>
+                    <tr
+                      key={t.level}
+                      className="border-t transition-colors hover:bg-[rgba(18,41,74,0.05)]"
+                      style={{ borderColor: "var(--border)" }}
+                    >
                       <td className="px-4 py-2 font-medium">
                         {t.level} <span className="opacity-50">{t.hi}</span>
                       </td>

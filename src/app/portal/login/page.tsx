@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { logInAction } from "../actions";
 import { Field, TextInput } from "@/components/portal/FormField";
 import { DIRECTIONS } from "@/lib/directions";
@@ -6,7 +7,7 @@ export default function LoginPage({ searchParams }: { searchParams: { error?: st
   return (
     <div style={DIRECTIONS.civicTech as React.CSSProperties} className="min-h-screen">
       <div className="mx-auto max-w-md px-6 py-24 sm:px-10">
-        <p className="text-xs uppercase tracking-[0.3em]" style={{ color: "var(--accent)" }}>
+        <p className="text-sm uppercase tracking-[0.3em]" style={{ color: "var(--accent)" }}>
           Members Portal
         </p>
         <h1 className="mt-2 text-3xl font-semibold" style={{ fontFamily: "var(--heading-font)" }}>
@@ -14,9 +15,9 @@ export default function LoginPage({ searchParams }: { searchParams: { error?: st
         </h1>
         <p className="mt-2 text-sm opacity-70">
           New here?{" "}
-          <a href="/portal/signup" className="underline" style={{ color: "var(--accent)" }}>
+          <Link href="/portal/signup" className="underline" style={{ color: "var(--accent)" }}>
             Apply to join
-          </a>
+          </Link>
         </p>
 
         {searchParams.error && (

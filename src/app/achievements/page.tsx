@@ -87,7 +87,7 @@ export default function AchievementsPage() {
     >
       <section className="px-6 py-16 sm:px-10">
         <div className="mx-auto max-w-3xl">
-          <p className="text-xs uppercase tracking-[0.3em]" style={{ color: "var(--accent2)" }}>
+          <p className="text-sm uppercase tracking-[0.3em]" style={{ color: "var(--accent2)" }}>
             <ScrambleText en="Achievements & Social Work" hi="उपलब्धियाँ और सामाजिक कार्य" />
           </p>
           <h1 className="mt-2 text-4xl font-semibold" style={{ fontFamily: "var(--heading-font)" }}>
@@ -113,7 +113,7 @@ export default function AchievementsPage() {
       <Reveal>
         <section className="px-6 pb-24 sm:px-10">
           <div className="mx-auto max-w-3xl rounded-xl border p-6" style={{ borderColor: "var(--border)" }}>
-            <p className="text-xs uppercase tracking-widest" style={{ color: "var(--accent2)" }}>
+            <p className="text-sm uppercase tracking-widest" style={{ color: "var(--accent2)" }}>
               Organisation-reported, current
             </p>
             <p className="mt-2 leading-relaxed opacity-80">

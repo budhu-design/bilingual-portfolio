@@ -22,7 +22,7 @@ const CARDS = [
 function SectionLabel({ eyebrow, en, hi, note }: { eyebrow: string; en: string; hi: string; note: string }) {
   return (
     <div className="mb-10">
-      <p className="text-xs uppercase tracking-[0.3em] text-[#c8a24e]">{eyebrow}</p>
+      <p className="text-sm uppercase tracking-[0.3em] text-[#c8a24e]">{eyebrow}</p>
       <h2 className="mt-2 text-3xl font-semibold text-[#f6f3ec] sm:text-4xl">
         <ScrambleText en={en} hi={hi} />
       </h2>

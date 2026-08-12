@@ -1,4 +1,5 @@
 import { redirect, notFound } from "next/navigation";
+import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { getSessionProfile } from "@/lib/members/session";
 import { tierForPoints, totalPoints } from "@/lib/members/ranking";
@@ -38,9 +39,9 @@ export default async function MemberProfilePage({ params }: { params: { id: stri
   return (
     <div style={DIRECTIONS.civicTech as React.CSSProperties} className="min-h-screen">
       <div className="mx-auto max-w-2xl px-6 py-16 sm:px-10">
-        <a href="/portal/members" className="text-sm underline" style={{ color: "var(--accent)" }}>
+        <Link href="/portal/members" className="text-sm underline" style={{ color: "var(--accent)" }}>
           ← Back to directory
-        </a>
+        </Link>
         <div className="mt-4 flex items-center gap-4">
           {member.photo_url ? (
             // eslint-disable-next-line @next/next/no-img-element
@@ -74,7 +75,7 @@ export default async function MemberProfilePage({ params }: { params: { id: stri
             <ul className="grid gap-3 sm:grid-cols-2">
               {projects.map((p) => (
                 <li key={p.id} className="rounded-xl border p-4" style={{ borderColor: "var(--border)", background: "#fff" }}>
-                  <p className="text-xs uppercase tracking-widest" style={{ color: "var(--accent)" }}>
+                  <p className="text-sm uppercase tracking-widest" style={{ color: "var(--accent)" }}>
                     {new Date(p.activity_date).toLocaleDateString()}
                   </p>
                   <p className="mt-1 font-medium">{p.title}</p>

@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Reveal, ScrambleText, MagneticButton, TiltCard } from "@/components/anim-kit";
 import { FoundingHero } from "@/components/site/FoundingHero";
 import { CenturyChart } from "@/components/site/CenturyChart";
@@ -43,6 +45,7 @@ const HIGHLIGHTS = [
 ];
 
 export default function HomePage() {
+  const router = useRouter();
   return (
     <div style={DIRECTIONS.sanghSmriti as React.CSSProperties}>
       <FoundingHero />
@@ -57,15 +60,15 @@ export default function HomePage() {
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <MagneticButton
-              onClick={() => (window.location.href = "/portal/signup")}
+              onClick={() => router.push("/portal/signup")}
               className="rounded-full px-8 py-3 text-sm font-medium text-[#F2E8D5]"
               style={{ background: "var(--accent)" } as React.CSSProperties}
             >
               <ScrambleText en="Join the Members Portal" hi="सदस्य पोर्टल में शामिल हों" />
             </MagneticButton>
-            <a href="/about" className="rounded-full border px-8 py-3 text-sm font-medium" style={{ borderColor: "var(--fg)" }}>
+            <Link href="/about" className="rounded-full border px-8 py-3 text-sm font-medium" style={{ borderColor: "var(--fg)" }}>
               <ScrambleText en="Read the history" hi="इतिहास पढ़ें" />
-            </a>
+            </Link>
           </div>
         </div>
       </section>
@@ -74,9 +77,18 @@ export default function HomePage() {
         <CenturyChart />
       </Reveal>
 
-      {/* Quick facts strip */}
+      {/* Quick facts strip — edges fade rather than a hard-cut border line */}
       <Reveal>
-        <section className="border-y px-6 py-10 sm:px-10" style={{ borderColor: "var(--border)" }}>
+        <section
+          className="relative px-6 py-10 sm:px-10"
+          style={{
+            backgroundImage:
+              "linear-gradient(to right, transparent, var(--border) 15%, var(--border) 85%, transparent), linear-gradient(to right, transparent, var(--border) 15%, var(--border) 85%, transparent)",
+            backgroundSize: "100% 1px, 100% 1px",
+            backgroundPosition: "top, bottom",
+            backgroundRepeat: "no-repeat",
+          }}
+        >
           <div className="mx-auto grid max-w-4xl grid-cols-2 gap-6 sm:grid-cols-4">
             {FACTS.map((f) => (
               <div key={f.en}>
@@ -99,7 +111,7 @@ export default function HomePage() {
       <section className="px-6 py-20 sm:px-10">
         <div className="mx-auto max-w-4xl">
           <Reveal>
-            <p className="text-xs uppercase tracking-[0.3em]" style={{ color: "var(--accent)" }}>
+            <p className="text-sm uppercase tracking-[0.3em]" style={{ color: "var(--accent)" }}>
               <ScrambleText en="Documented service" hi="दर्ज सेवा" />
             </p>
             <h2 className="mt-2 text-3xl" style={{ fontFamily: "var(--heading-font)" }}>
@@ -127,14 +139,22 @@ export default function HomePage() {
             ))}
           </div>
           <Reveal delay={0.2} className="mt-6">
-            <a href="/achievements" className="text-sm underline" style={{ color: "var(--accent)" }}>
+            <Link href="/achievements" className="text-sm underline" style={{ color: "var(--accent)" }}>
               <ScrambleText en="See the full record →" hi="पूरा विवरण देखें →" />
-            </a>
+            </Link>
           </Reveal>
         </div>
       </section>
 
-      <footer className="border-t px-6 py-10 text-xs opacity-60 sm:px-10" style={{ borderColor: "var(--border)" }}>
+      <footer
+        className="px-6 py-10 text-xs opacity-60 sm:px-10"
+        style={{
+          backgroundImage: "linear-gradient(to right, transparent, var(--border) 15%, var(--border) 85%, transparent)",
+          backgroundSize: "100% 1px",
+          backgroundPosition: "top",
+          backgroundRepeat: "no-repeat",
+        }}
+      >
         <div className="mx-auto max-w-4xl">
           Sources cited on each page. Figures marked &quot;organisation-reported&quot; are self-reported by
           RSS-affiliated bodies, distinct from independently verified figures.

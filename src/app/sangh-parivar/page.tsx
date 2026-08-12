@@ -126,7 +126,7 @@ export default function SanghParivarPage() {
     >
       <section className="px-6 py-16 sm:px-10">
         <div className="mx-auto max-w-5xl">
-          <p className="text-xs uppercase tracking-[0.3em]" style={{ color: "var(--accent)" }}>
+          <p className="text-sm uppercase tracking-[0.3em]" style={{ color: "var(--accent)" }}>
             <ScrambleText en="Sangh Parivar" hi="संघ परिवार" />
           </p>
           <h1 className="mt-2 text-4xl font-bold" style={{ fontFamily: "var(--heading-font)" }}>
@@ -146,8 +146,8 @@ export default function SanghParivarPage() {
                   className="h-full rounded-xl border p-5"
                   style={{ borderColor: "var(--border)", background: "#fff" } as React.CSSProperties}
                 >
-                  <button onClick={() => setActiveId(a.id)} className="block w-full text-left">
-                    <p className="font-medium">
+                  <button onClick={() => setActiveId(a.id)} className="group block w-full text-left">
+                    <p className="font-medium transition-colors group-hover:opacity-70">
                       <ScrambleText en={a.en} hi={a.hi} />
                     </p>
                     <p className="mt-2 text-sm opacity-70">
@@ -158,9 +158,6 @@ export default function SanghParivarPage() {
                         <ScrambleText en={a.flag.en} hi={a.flag.hi} />
                       </p>
                     )}
-                    <p className="mt-3 text-xs opacity-50" style={{ color: "var(--accent)" }}>
-                      Tap for more →
-                    </p>
                   </button>
                 </TiltCard>
               </Reveal>

@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { getSessionProfile } from "@/lib/members/session";
 import { DIRECTIONS } from "@/lib/directions";
@@ -26,7 +27,7 @@ export default async function MembersDirectory({ searchParams }: { searchParams:
   return (
     <div style={DIRECTIONS.civicTech as React.CSSProperties} className="min-h-screen">
       <div className="mx-auto max-w-3xl px-6 py-16 sm:px-10">
-        <p className="text-xs uppercase tracking-[0.3em]" style={{ color: "var(--accent)" }}>
+        <p className="text-sm uppercase tracking-[0.3em]" style={{ color: "var(--accent)" }}>
           Members Portal
         </p>
         <h1 className="mt-2 text-2xl font-semibold" style={{ fontFamily: "var(--heading-font)" }}>
@@ -37,7 +38,7 @@ export default async function MembersDirectory({ searchParams }: { searchParams:
         </p>
 
         <div className="mt-6 flex flex-wrap gap-2">
-          <a
+          <Link
             href="/portal/members"
             className="rounded-full border px-3 py-1 text-xs"
             style={
@@ -47,9 +48,9 @@ export default async function MembersDirectory({ searchParams }: { searchParams:
             }
           >
             All
-          </a>
+          </Link>
           {subgroups?.map((s) => (
-            <a
+            <Link
               key={s.id}
               href={`/portal/members?subgroup=${s.id}`}
               className="rounded-full border px-3 py-1 text-xs"
@@ -60,14 +61,14 @@ export default async function MembersDirectory({ searchParams }: { searchParams:
               }
             >
               {s.name}
-            </a>
+            </Link>
           ))}
         </div>
 
         <ul className="mt-6 grid gap-3 sm:grid-cols-2">
           {filtered.map((m) => (
             <li key={m.id}>
-              <a
+              <Link
                 href={`/portal/members/${m.id}`}
                 className="flex items-center gap-3 rounded-xl border p-3 transition-colors hover:border-[color:var(--accent)]"
                 style={{ borderColor: "var(--border)", background: "#fff" }}
@@ -82,7 +83,7 @@ export default async function MembersDirectory({ searchParams }: { searchParams:
                   <p className="text-sm font-medium">{m.official_name}</p>
                   {m.work_type && <p className="text-xs opacity-60">{m.work_type}</p>}
                 </div>
-              </a>
+              </Link>
             </li>
           ))}
           {filtered.length === 0 && <p className="text-sm opacity-60">No members in this subgroup yet.</p>}

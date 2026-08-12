@@ -16,7 +16,7 @@ export default async function AdminShakhasPage() {
 
   return (
     <div className="mx-auto max-w-3xl px-6 py-16 sm:px-10">
-      <p className="text-xs uppercase tracking-[0.3em] text-[#c8a24e]">Admin</p>
+      <p className="text-sm uppercase tracking-[0.3em] text-[#c8a24e]">Admin</p>
       <h1 className="mt-2 text-2xl font-semibold text-[#f6f3ec]">Shakha locations</h1>
       <p className="mt-2 text-sm text-[#f6f3ec]/50">
         Only add locations you can personally verify. This map is public — anyone can view it, signed in or not.
