@@ -9,11 +9,11 @@ import {
   OrgChart,
   Reveal,
   ScrambleText,
-  ShakhaMap,
   TiltCard,
   Timeline,
   usePrefersReducedMotion,
 } from "@/components/anim-kit";
+import { ShakhaLocatorMap } from "@/components/portal/ShakhaLocatorMap";
 
 const CARDS = [
   { en: "Brand Identity", hi: "ब्रांड पहचान", desc: { en: "Mark, type, colour system.", hi: "चिह्न, टाइप, रंग प्रणाली।" } },
@@ -106,14 +106,14 @@ function DemoBody() {
         <div className="mt-28">
           <Reveal>
             <SectionLabel
-              eyebrow="04 · Locator micro-interactions"
+              eyebrow="04 · Real locator"
               en="Shakha locator"
               hi="शाखा लोकेटर"
-              note="Replaces a plain pin-drop map embed. Every pin idles with its own pulse; hovering surfaces a label, clicking flies in a spring-driven detail card."
+              note="A real Leaflet + OpenStreetMap map (no API key needed) reading live from Supabase — same component used on /contact. Add or remove a pin in /admin/shakhas and every open tab updates via realtime."
             />
           </Reveal>
           <Reveal delay={0.1}>
-            <ShakhaMap />
+            <ShakhaLocatorMap />
           </Reveal>
         </div>
 

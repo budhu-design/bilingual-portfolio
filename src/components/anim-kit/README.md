@@ -8,6 +8,12 @@ reveals). Live demo at `/animations-demo`.
 Every effect is unique to this brief — not a generic fade-in library — and
 every effect degrades gracefully under `prefers-reduced-motion: reduce`.
 
+The shakha locator now lives outside this kit, at
+`src/components/portal/ShakhaLocatorMap.tsx` — it's a real Leaflet +
+OpenStreetMap map reading live from Supabase (see that component and
+`src/app/contact/page.tsx`), not an animation-only demo, since it needs to be
+backed by real data rather than sample props.
+
 ## What's in here
 
 | File | What it does | Replaces |
@@ -18,7 +24,6 @@ every effect degrades gracefully under `prefers-reduced-motion: reduce`.
 | `Hero.tsx` | Page-load hero: curtain-panel retract, line-masked staggered headline, cursor-parallax blobs, film-grain overlay | A generic fade/slide-up hero |
 | `Timeline.tsx` | Scroll-scrubbed SVG line draw + independent per-node blur-in | `fade-in-on-scroll` classes |
 | `OrgChart.tsx` | Pan (drag), zoom (wheel / buttons), click-to-focus camera fly-to, expand/collapse hierarchy | A static PNG/PDF org chart |
-| `ShakhaMap.tsx` | Locator console: idle pin pulses, radar sweep, spring detail-card on click | An embedded Google Maps iframe with default pins |
 | `MicroInteractions.tsx` | `MagneticButton` (cursor-attracted CTA), `TiltCard` (3D tilt + cursor-follow glow) | `hover:scale-105` |
 | `Reveal.tsx` | Generic GSAP ScrollTrigger blur/rise wrapper for any section | ad-hoc `IntersectionObserver` fade-ins |
 | `useReducedMotion.ts` | Live `prefers-reduced-motion` hook used by every component above | — |
@@ -43,12 +48,14 @@ every effect degrades gracefully under `prefers-reduced-motion: reduce`.
    catalogue instead of literal props — the component only needs the two
    resolved strings for the current key.
 5. **Drop `LanguageSwitch`** into your header/nav.
-6. **Replace your real hero/timeline/org-chart/map markup** with
-   `<Hero />`, `<Timeline />`, `<OrgChart />`, `<ShakhaMap />` — each accepts
-   no required props; swap the hardcoded `EVENTS` / `ORG` / `PINS` arrays at
-   the top of `Timeline.tsx`, `OrgChart.tsx`, and `ShakhaMap.tsx` for your
-   real data (or lift them to props if you want the components reusable
-   across pages — kept as local consts here for drop-in simplicity).
+6. **Replace your real hero/timeline/org-chart markup** with `<Hero />`,
+   `<Timeline />`, `<OrgChart />` — each accepts no required props; swap the
+   hardcoded `EVENTS` / `ORG` arrays at the top of `Timeline.tsx` /
+   `OrgChart.tsx` for your real data (or lift them to props if you want the
+   components reusable across pages — kept as local consts here for drop-in
+   simplicity). For the shakha locator, use
+   `<ShakhaLocatorMap />` from `src/components/portal/` instead — it reads
+   real rows from Supabase rather than sample props.
 7. **Wrap any other section** you want to animate on scroll in `<Reveal>`.
 8. **Use `MagneticButton` / `TiltCard`** anywhere you currently have a plain
    `<button>` / card `<div>`.
@@ -106,9 +113,9 @@ gitignored).
 - `ScrambleText`'s Devanagari fallback relies on the browser/OS default font
   — add a Devanagari-supporting webfont (e.g. Noto Sans Devanagari) via
   `next/font` for consistent rendering across platforms.
-- `OrgChart`, `Timeline`, and `ShakhaMap` currently hold their sample data as
-  local constants for drop-in simplicity — lift to props/CMS data once wired
-  to the real org structure and shakha list.
-- `ShakhaMap` is an abstract "locator console," not a georeferenced map —
-  if you need real coordinates, keep the same interaction layer (idle pulse,
-  hover label, click-to-detail-card) on top of an actual map/SVG basemap.
+- `OrgChart` and `Timeline` currently hold their sample data as local
+  constants for drop-in simplicity — lift to props/CMS data once wired to
+  the real org structure.
+- `OrgChart`'s pan/zoom math assumes the tree container's `left-1/2 top-10`
+  positioning — if you restyle its wrapper, re-derive `focusNode`/`zoomBy`'s
+  constants (see the comments inline) rather than copying the numbers as-is.

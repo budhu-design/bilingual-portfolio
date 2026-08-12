@@ -46,6 +46,8 @@ const NODE_W = 176;
 const NODE_H = 64;
 const COL_GAP = 32;
 const ROW_GAP = 96;
+// Must match the `top-10` Tailwind class on the draggable tree container below.
+const CONTENT_TOP_OFFSET = 40;
 
 type Positioned = Node & { x: number; y: number; depth: number; parentId: string | null };
 
@@ -99,12 +101,16 @@ export function OrgChart() {
     if (!vp) return;
     const targetScale = 1.15;
     const rect = vp.getBoundingClientRect();
-    animate(x, rect.width / 2 - (n.x + NODE_W / 2) * targetScale, {
+    // The tree's own container is already anchored at the viewport's
+    // horizontal center via `left-1/2`, so centering a node needs pan = 0 at
+    // that node's local origin — NOT rect.width/2 (that term double-counts
+    // the anchor and was throwing focused nodes off to the side).
+    animate(x, -(n.x + NODE_W / 2) * targetScale, {
       type: "spring",
       stiffness: 200,
       damping: 28,
     });
-    animate(y, rect.height / 2 - (n.y + NODE_H / 2) * targetScale, {
+    animate(y, rect.height / 2 - CONTENT_TOP_OFFSET - (n.y + NODE_H / 2) * targetScale, {
       type: "spring",
       stiffness: 200,
       damping: 28,
@@ -113,8 +119,21 @@ export function OrgChart() {
   };
 
   const zoomBy = (delta: number) => {
-    const next = Math.min(1.6, Math.max(0.5, scale.get() + delta));
-    animate(scale, next, { type: "spring", stiffness: 300, damping: 30 });
+    const vp = viewportRef.current;
+    if (!vp) return;
+    const oldScale = scale.get();
+    const newScale = Math.min(1.6, Math.max(0.5, oldScale + delta));
+    if (newScale === oldScale) return;
+    // Scale alone re-anchors around the container's fixed CSS transform-origin
+    // (its own top-left, independent of how far the user has panned), which
+    // is what made zooming feel like it jumped to an unrelated point. Rescale
+    // the current pan by the same ratio so whatever's centered stays centered.
+    const rect = vp.getBoundingClientRect();
+    const ratio = newScale / oldScale;
+    const centerY = rect.height / 2 - CONTENT_TOP_OFFSET;
+    animate(x, x.get() * ratio, { type: "spring", stiffness: 300, damping: 30 });
+    animate(y, centerY * (1 - ratio) + y.get() * ratio, { type: "spring", stiffness: 300, damping: 30 });
+    animate(scale, newScale, { type: "spring", stiffness: 300, damping: 30 });
   };
 
   return (
