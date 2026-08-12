@@ -87,12 +87,12 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     await new Promise((r) => setTimeout(r, 90));
 
     await Promise.all([
-      lead.start({ x: "100%", transition: { duration: 0.46, ease: EASE, delay: 0.04 } }),
-      trail.start({ x: "100%", transition: { duration: 0.46, ease: EASE } }),
+      lead.start({ x: "125%", transition: { duration: 0.46, ease: EASE, delay: 0.04 } }),
+      trail.start({ x: "125%", transition: { duration: 0.46, ease: EASE } }),
     ]);
 
-    lead.set({ x: "-100%" });
-    trail.set({ x: "-100%" });
+    lead.set({ x: "-125%" });
+    trail.set({ x: "-125%" });
     setTransitioning(false);
     lockRef.current = false;
   }, [lang, lead, trail, reduced]);
@@ -102,15 +102,15 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
       {children}
       <div className="pointer-events-none fixed inset-0 z-[999] overflow-hidden" aria-hidden="true">
         <motion.div
-          initial={{ x: "-100%", skewX: -14 }}
+          initial={{ x: "-125%", skewX: -11 }}
           animate={trail}
-          className="absolute -inset-y-[20%] left-[6%] w-[22%]"
+          className="absolute -inset-y-[8%] left-[6%] w-[15%]"
           style={{ background: ACCENT[incoming === "en" ? "hi" : "en"], opacity: 0.55 }}
         />
         <motion.div
-          initial={{ x: "-100%", skewX: -14 }}
+          initial={{ x: "-125%", skewX: -11 }}
           animate={lead}
-          className="absolute -inset-y-[20%] w-[70%]"
+          className="absolute -inset-y-[8%] w-[56%]"
           style={{ background: ACCENT[incoming] }}
         />
         {transitioning && (
