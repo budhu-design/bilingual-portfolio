@@ -22,7 +22,13 @@ const DEFAULT_EVENTS: TimelineEvent[] = [
  * position (not just "revealed once") so it reads as being drawn by the
  * scroll itself. Each node blurs/rises in independently as it enters view.
  */
-export function Timeline({ events = DEFAULT_EVENTS }: { events?: TimelineEvent[] }) {
+export function Timeline({
+  events = DEFAULT_EVENTS,
+  onEventClick,
+}: {
+  events?: TimelineEvent[];
+  onEventClick?: (event: TimelineEvent, index: number) => void;
+}) {
   const rootRef = useRef<HTMLDivElement>(null);
   const pathRef = useRef<SVGPathElement>(null);
   const reduced = usePrefersReducedMotion();
@@ -92,27 +98,44 @@ export function Timeline({ events = DEFAULT_EVENTS }: { events?: TimelineEvent[]
         />
       </svg>
       <ul className="space-y-16">
-        {events.map((e) => (
-          <li key={e.year} className="tl-node relative pl-16">
-            <span
-              className="absolute left-6 top-1 h-3 w-3 -translate-x-1/2 rounded-full ring-4"
-              style={{
-                background: "var(--timeline-accent, #c8a24e)",
-                ["--tw-ring-color" as string]: "var(--timeline-ring, #0d0d10)",
-              }}
-            />
-            <span className="text-xs uppercase tracking-widest" style={{ color: "var(--timeline-accent, #c8a24e)" }}>
-              {e.year}
-            </span>
-            <ScrambleText
-              as="p"
-              en={e.en}
-              hi={e.hi}
-              className="mt-1 text-lg"
-              style={{ color: "var(--timeline-text, #f6f3ec)" } as React.CSSProperties}
-            />
-          </li>
-        ))}
+        {events.map((e, i) => {
+          const clickable = !!onEventClick;
+          const Tag = clickable ? "button" : "div";
+          return (
+            <li key={e.year} className="tl-node relative pl-16">
+              <span
+                className="absolute left-6 top-1 h-3 w-3 -translate-x-1/2 rounded-full ring-4"
+                style={{
+                  background: "var(--timeline-accent, #c8a24e)",
+                  ["--tw-ring-color" as string]: "var(--timeline-ring, #0d0d10)",
+                }}
+              />
+              <Tag
+                onClick={clickable ? () => onEventClick!(e, i) : undefined}
+                className={`block text-left ${clickable ? "cursor-pointer transition-opacity hover:opacity-70" : ""}`}
+              >
+                <span
+                  className="text-base font-semibold uppercase tracking-widest"
+                  style={{ color: "var(--timeline-accent, #c8a24e)" }}
+                >
+                  {e.year}
+                </span>
+                <ScrambleText
+                  as="p"
+                  en={e.en}
+                  hi={e.hi}
+                  className="mt-1 text-lg"
+                  style={{ color: "var(--timeline-text, #f6f3ec)" } as React.CSSProperties}
+                />
+                {clickable && (
+                  <span className="mt-1 inline-block text-xs opacity-50" style={{ color: "var(--timeline-accent, #c8a24e)" }}>
+                    Tap for more →
+                  </span>
+                )}
+              </Tag>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );

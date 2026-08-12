@@ -1,8 +1,10 @@
 "use client";
 
-import { createContext, useCallback, useContext, useRef, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useRef, useState } from "react";
 import { motion, useAnimationControls } from "framer-motion";
 import { usePrefersReducedMotion } from "./useReducedMotion";
+
+const STORAGE_KEY = "site-lang";
 
 export type Lang = "en" | "hi";
 
@@ -22,8 +24,10 @@ export function useLanguage() {
 }
 
 // Colour identity per language — the wipe borrows these so the transition
-// itself communicates "which language is arriving", not just a neutral fade.
-const ACCENT: Record<Lang, string> = { en: "#3a4d78", hi: "#a63d40" };
+// itself communicates "which language is arriving", not just a neutral
+// fade. Both muted and warm-neutral (stone / terracotta) rather than a
+// bold, clashing pair — blue+red fought with every page's own palette.
+const ACCENT: Record<Lang, string> = { en: "#8a7f6a", hi: "#a56a52" };
 const EASE = [0.76, 0, 0.24, 1] as const;
 
 /**
@@ -43,12 +47,23 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const trail = useAnimationControls();
   const lockRef = useRef(false);
 
+  // Restore a previously chosen language on mount (client-only — SSR always
+  // renders "en" so hydration matches, then this corrects it once) so
+  // navigating/reloading doesn't silently reset the user's choice back to
+  // English.
+  useEffect(() => {
+    const stored = window.localStorage.getItem(STORAGE_KEY);
+    if (stored === "en" || stored === "hi") setLang(stored);
+  }, []);
+
   const toggle = useCallback(async () => {
     if (lockRef.current) return;
     lockRef.current = true;
 
     if (reduced) {
-      setLang((l) => (l === "en" ? "hi" : "en"));
+      const next: Lang = lang === "en" ? "hi" : "en";
+      setLang(next);
+      window.localStorage.setItem(STORAGE_KEY, next);
       lockRef.current = false;
       return;
     }
@@ -63,6 +78,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     ]);
 
     setLang(next);
+    window.localStorage.setItem(STORAGE_KEY, next);
     await new Promise((r) => setTimeout(r, 90));
 
     await Promise.all([

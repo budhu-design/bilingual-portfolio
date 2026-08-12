@@ -188,21 +188,19 @@ export function OrgChart({ data = DEFAULT_ORG }: { data?: OrgNode }) {
         </div>
       </div>
 
-      <div
+      <motion.div
         ref={viewportRef}
         className="relative h-[440px] w-full cursor-grab overflow-hidden rounded-2xl border border-white/10 bg-[#111116] active:cursor-grabbing"
         onWheel={(e) => {
           e.preventDefault();
           zoomBy(-e.deltaY * 0.001);
         }}
+        onPan={(_e, info) => {
+          x.set(x.get() + info.delta.x);
+          y.set(y.get() + info.delta.y);
+        }}
       >
-        <motion.div
-          drag
-          dragElastic={0.15}
-          dragMomentum={false}
-          style={{ x, y, scale }}
-          className="absolute left-1/2 top-10 origin-top-left"
-        >
+        <motion.div style={{ x, y, scale }} className="absolute left-1/2 top-10 origin-top-left">
           <svg className="absolute left-0 top-0 overflow-visible" width={1} height={1}>
             {visible
               .filter((n) => n.parentId)
@@ -258,7 +256,7 @@ export function OrgChart({ data = DEFAULT_ORG }: { data?: OrgNode }) {
             </motion.button>
           ))}
         </motion.div>
-      </div>
+      </motion.div>
     </div>
   );
 }

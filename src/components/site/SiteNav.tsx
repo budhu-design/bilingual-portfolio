@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { LanguageSwitch } from "@/components/anim-kit/LanguageSwitch";
 import { ScrambleText } from "@/components/anim-kit/ScrambleText";
 
@@ -24,20 +25,33 @@ export function SiteNav() {
   return (
     <header className="sticky top-0 z-40 border-b border-white/10 bg-[#0d0d10]/90 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-8">
-        <a href="/" className="shrink-0 text-sm font-semibold tracking-wide text-[#f6f3ec]">
+        <a href="/" className="shrink-0 text-base font-semibold tracking-wide text-[#f6f3ec]">
           आरएसएस · RSS
         </a>
-        <nav className="flex flex-1 flex-wrap items-center gap-x-4 gap-y-1 overflow-x-auto text-xs text-[#f6f3ec]/60">
+        <nav className="flex flex-1 flex-wrap items-center gap-x-5 gap-y-1 overflow-x-auto text-sm text-[#f6f3ec]/60">
           {LINKS.map((l) => (
-            <a key={l.href} href={l.href} className="whitespace-nowrap transition-colors hover:text-[#c8a24e]">
+            <motion.a
+              key={l.href}
+              href={l.href}
+              className="relative whitespace-nowrap py-1 transition-colors hover:text-[#c8a24e]"
+              initial="rest"
+              whileHover="hover"
+              animate="rest"
+            >
               <ScrambleText en={l.en} hi={l.hi} />
-            </a>
+              <motion.span
+                className="absolute -bottom-0.5 left-0 h-px w-full bg-[#c8a24e]"
+                variants={{ rest: { scaleX: 0 }, hover: { scaleX: 1 } }}
+                transition={{ duration: 0.25, ease: "easeOut" }}
+                style={{ originX: 0 }}
+              />
+            </motion.a>
           ))}
         </nav>
         <div className="flex shrink-0 items-center gap-3">
           <a
             href="/portal"
-            className="hidden whitespace-nowrap rounded-full border border-white/15 px-3 py-1.5 text-xs text-[#f6f3ec]/80 hover:border-[#c8a24e]/50 sm:block"
+            className="hidden whitespace-nowrap rounded-full border border-white/15 px-3 py-1.5 text-sm text-[#f6f3ec]/80 transition-colors hover:border-[#c8a24e]/50 hover:text-[#c8a24e] sm:block"
           >
             <ScrambleText en="Members Portal" hi="सदस्य पोर्टल" />
           </a>

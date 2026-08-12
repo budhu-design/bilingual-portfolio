@@ -10,16 +10,18 @@ import type { ShakhaLocation } from "@/lib/members/types";
 const INDIA_CENTER: [number, number] = [22.9734, 78.6569];
 
 function pinIcon(L: typeof import("leaflet"), verified: boolean) {
+  const fill = verified ? "#c8a24e" : "#f6f3ec";
   return L.divIcon({
     className: "",
-    html: `<div style="
-      width:16px;height:16px;border-radius:9999px;
-      background:${verified ? "#c8a24e" : "#f6f3ec"};
-      border:2px solid #0d0d10;
-      box-shadow:0 0 0 3px rgba(200,162,78,0.25);
-    "></div>`,
-    iconSize: [16, 16],
-    iconAnchor: [8, 8],
+    html: `<div style="filter:drop-shadow(0 2px 3px rgba(0,0,0,0.5))">
+      <svg width="34" height="44" viewBox="0 0 34 44" xmlns="http://www.w3.org/2000/svg">
+        <path d="M17 0C7.6 0 0 7.6 0 17c0 12.5 17 27 17 27s17-14.5 17-27C34 7.6 26.4 0 17 0z" fill="${fill}" stroke="#0d0d10" stroke-width="2"/>
+        <circle cx="17" cy="17" r="6.5" fill="#0d0d10"/>
+      </svg>
+    </div>`,
+    iconSize: [34, 44],
+    iconAnchor: [17, 44],
+    popupAnchor: [0, -40],
   });
 }
 
@@ -136,15 +138,15 @@ export function ShakhaLocatorMap() {
   }, [locations, mapReady]);
 
   return (
-    <div className="relative h-[440px] w-full overflow-hidden rounded-2xl border border-white/10">
+    <div className="relative h-[560px] w-full overflow-hidden rounded-2xl border border-white/10 sm:h-[640px]">
       <div ref={containerRef} className="h-full w-full bg-[#111116]" />
       {loading && (
         <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-[#0d0d10]/60 text-sm text-[#f6f3ec]/50">
           Loading locations…
         </div>
       )}
-      <div className="pointer-events-none absolute bottom-3 left-3 rounded-lg bg-[#0d0d10]/80 px-3 py-1.5 text-[10px] text-[#f6f3ec]/60 backdrop-blur">
-        {locations.length} location{locations.length === 1 ? "" : "s"} · gold = verified
+      <div className="pointer-events-none absolute bottom-3 left-3 rounded-lg bg-[#0d0d10]/80 px-3 py-1.5 text-xs text-[#f6f3ec]/60 backdrop-blur">
+        {locations.length} location{locations.length === 1 ? "" : "s"} · gold pin = verified
       </div>
     </div>
   );

@@ -7,9 +7,22 @@
   --foreground: #f6f3ec;
 }
 
+/* A small, global bump — every rem-based Tailwind text size (including
+   paragraph copy) grows proportionally without touching every className. */
+html {
+  font-size: 17.5px;
+}
+
 body {
   color: var(--foreground);
   background: var(--background);
+}
+
+/* Paragraph copy specifically (not labels/eyebrows/nav) reads slightly
+   larger and looser — matches the "detail text should be bigger" request
+   without requiring every page to declare its own size. */
+p {
+  line-height: 1.65;
 }
 
 @layer utilities {
