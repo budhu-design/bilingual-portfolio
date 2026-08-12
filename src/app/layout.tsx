@@ -32,6 +32,12 @@ const geistMono = localFont({
   variable: "--font-geist-mono",
   weight: "100 900",
 });
+// User-supplied font pack for the home-hero title specifically.
+const aditi = localFont({
+  src: "./fonts/A_Aditi_Normal.ttf",
+  variable: "--font-aditi",
+  weight: "400",
+});
 
 export const metadata: Metadata = {
   title: "Rashtriya Swayamsevak Sangh — बिलिंगुअल पोर्टफोलियो",
@@ -42,6 +48,7 @@ export const metadata: Metadata = {
 const fontVariables = [
   geistSans.variable,
   geistMono.variable,
+  aditi.variable,
   rozhaOne.variable,
   spectral.variable,
   tiroDevanagari.variable,
