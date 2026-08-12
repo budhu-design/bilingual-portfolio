@@ -61,7 +61,7 @@ export function FoundingHero() {
         >
           <h1
             style={{ textShadow: reduced ? "none" : DEPTH_TEXT_SHADOW, fontFamily: "var(--font-aditi)" }}
-            className="text-[13vw] font-normal leading-[1.08] text-[#F2E8D5]/55 sm:text-[8vw]"
+            className="text-[13vw] font-bold leading-[1.08] text-[#F2E8D5] sm:text-[8vw]"
           >
             राष्ट्रीय स्वयंसेवक संघ
           </h1>
