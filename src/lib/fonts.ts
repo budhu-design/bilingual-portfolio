@@ -13,6 +13,7 @@ import {
   Noto_Sans_Devanagari,
   Kalam,
   Caveat,
+  Hind,
 } from "next/font/google";
 
 // Direction 1A — Sangh Smriti (Home, Contact)
@@ -21,6 +22,10 @@ import {
 // the plan's own fallback instruction; see notoDevanagari below.
 export const rozhaOne = Rozha_One({ subsets: ["latin"], weight: "400", variable: "--font-rozha" });
 export const spectral = Spectral({ subsets: ["latin"], weight: ["400", "600"], variable: "--font-spectral" });
+// Hind — a real, clean Devanagari sans (closest match to the requested
+// "Lini Regular", which isn't a real distinct font). Used for the large
+// home-hero title specifically.
+export const hind = Hind({ subsets: ["devanagari", "latin"], weight: "400", variable: "--font-hind" });
 
 // Direction 1B — Classical Library (About/History)
 export const tiroDevanagari = Tiro_Devanagari_Hindi({

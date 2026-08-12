@@ -11,23 +11,22 @@ const FLAG_URL = "https://upload.wikimedia.org/wikipedia/commons/2/2d/Flag_of_th
 const FOUNDING_PHOTO_URL =
   "https://upload.wikimedia.org/wikipedia/commons/6/6f/%E0%A4%B0%E0%A4%BE%E0%A4%B7%E0%A5%8D%E0%A4%9F%E0%A5%8D%E0%A4%B0%E0%A5%80%E0%A4%AF_%E0%A4%B8%E0%A5%8D%E0%A4%B5%E0%A4%AF%E0%A4%82%E0%A4%B8%E0%A5%87%E0%A4%B5%E0%A4%95_%E0%A4%B8%E0%A4%82%E0%A4%98_main_office_where_first_meeting_took_place.JPG";
 
-// A stacked, offset text-shadow — each layer a touch darker/further —
-// reads as an extruded/3D title rather than flat type. Cheap, no images.
+// Three solid, clearly-stepped layers (not a tight cluster of 1-2px shadows
+// that just blurs together at huge font sizes) plus one soft grounding
+// shadow — reads as a crisp extruded edge, not a haze.
 const DEPTH_TEXT_SHADOW = [
-  "1px 1px 0 rgba(178,155,95,0.9)",
-  "2px 2px 0 rgba(160,138,80,0.8)",
-  "3px 3px 0 rgba(140,118,64,0.7)",
-  "4px 4px 0 rgba(120,98,50,0.6)",
-  "5px 5px 0 rgba(100,80,38,0.5)",
-  "8px 10px 18px rgba(0,0,0,0.55)",
+  "3px 4px 0 rgba(178,155,95,1)",
+  "6px 8px 0 rgba(150,128,72,0.9)",
+  "9px 12px 0 rgba(120,98,50,0.8)",
+  "12px 16px 22px rgba(0,0,0,0.45)",
 ].join(", ");
 
 /**
- * Bold masthead treatment: a thin black bar carries just the flag icon;
- * the real branding moment is the large Devanagari title over the photo,
- * given a layered-shadow "extrusion" for depth plus its own scroll parallax
- * (moving/scaling at a different rate than the photo beneath it — that
- * separation, not a watermark, is what reads as depth).
+ * The title gets its own section — full-width, generously padded, set in
+ * Hind (a real clean Devanagari sans at Regular weight; "Lini Regular"
+ * isn't a real distinct font) — rather than being squeezed into the photo
+ * overlay. It still tracks the hero's overall scroll progress for a subtle
+ * recede-as-you-scroll depth cue, just from its own dedicated space.
  */
 export function FoundingHero() {
   const ref = useRef<HTMLDivElement>(null);
@@ -36,8 +35,8 @@ export function FoundingHero() {
 
   const photoY = useTransform(scrollYProgress, [0, 1], reduced ? [0, 0] : [0, 90]);
   const photoScale = useTransform(scrollYProgress, [0, 1], reduced ? [1, 1] : [1.1, 1]);
-  const titleY = useTransform(scrollYProgress, [0, 1], reduced ? [0, 0] : [0, -70]);
-  const titleScale = useTransform(scrollYProgress, [0, 1], reduced ? [1, 1] : [1, 0.92]);
+  const titleY = useTransform(scrollYProgress, [0, 1], reduced ? [0, 0] : [0, -60]);
+  const titleScale = useTransform(scrollYProgress, [0, 1], reduced ? [1, 1] : [1, 0.94]);
   const textY = useTransform(scrollYProgress, [0, 1], reduced ? [0, 0] : [0, -30]);
 
   return (
@@ -47,7 +46,16 @@ export function FoundingHero() {
         <img src={FLAG_URL} alt="Flag of the Rashtriya Swayamsevak Sangh" className="h-6 w-auto sm:h-7" />
       </div>
 
-      <div className="relative h-[80vh] min-h-[560px] max-h-[820px] overflow-hidden">
+      <motion.div style={{ y: titleY, scale: titleScale }} className="relative z-10 px-6 py-16 text-center sm:px-10 sm:py-24">
+        <h1
+          style={{ textShadow: reduced ? "none" : DEPTH_TEXT_SHADOW, fontFamily: "var(--font-hind)" }}
+          className="text-[16vw] font-normal leading-[1.08] sm:text-[10vw]"
+        >
+          राष्ट्रीय स्वयंसेवक संघ
+        </h1>
+      </motion.div>
+
+      <div className="relative h-[68vh] min-h-[440px] max-h-[680px] overflow-hidden">
         <motion.img
           src={FOUNDING_PHOTO_URL}
           alt="The building on the Mohitewada grounds in Nagpur where the organisation's first meeting took place"
@@ -56,14 +64,7 @@ export function FoundingHero() {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-black/55" />
 
-        <motion.h1
-          style={{ y: titleY, scale: titleScale, textShadow: reduced ? "none" : DEPTH_TEXT_SHADOW }}
-          className="relative z-10 mt-10 px-6 text-center text-[12vw] font-bold leading-[1.05] text-[#F2E8D5] sm:mt-14 sm:px-10 sm:text-[6.5vw]"
-        >
-          <span style={{ fontFamily: "var(--font-noto-devanagari)" }}>राष्ट्रीय स्वयंसेवक संघ</span>
-        </motion.h1>
-
-        <motion.div style={{ y: textY }} className="relative z-10 flex h-[36%] flex-col justify-end px-6 pb-14 sm:px-10">
+        <motion.div style={{ y: textY }} className="relative z-10 flex h-full flex-col justify-end px-6 pb-14 sm:px-10">
           <p className="text-sm uppercase tracking-[0.3em]" style={{ color: "#B29B5F" }}>
             <ScrambleText en="Mohitewada, Nagpur — where it began" hi="मोहितेवाड़ा, नागपुर — जहाँ से आरंभ हुआ" />
           </p>

@@ -19,6 +19,7 @@ import {
   amita,
   newsreader,
   notoDevanagari,
+  hind,
 } from "@/lib/fonts";
 
 const geistSans = localFont({
@@ -55,6 +56,7 @@ const fontVariables = [
   amita.variable,
   newsreader.variable,
   notoDevanagari.variable,
+  hind.variable,
 ].join(" ");
 
 export default function RootLayout({
