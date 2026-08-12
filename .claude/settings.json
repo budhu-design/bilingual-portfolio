@@ -1,0 +1,13 @@
+{
+  "extraKnownMarketplaces": {
+    "imagekit-tools": {
+      "source": {
+        "source": "github",
+        "repo": "imagekit-developer/skills"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "imagekit-plugin@imagekit-tools": true
+  }
+}
