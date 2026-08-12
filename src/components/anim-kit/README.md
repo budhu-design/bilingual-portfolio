@@ -89,6 +89,18 @@ micro-interactions) is "make a good portfolio distinctive"; this one is
   the visible content isn't descriptive enough (map pins, zoom controls,
   language switch).
 
+## Troubleshooting
+
+If the demo page loads as plain unstyled text with a stray full-height SVG
+line and no animations run, check the dev server's terminal output for the
+static assets (`/_next/static/css/...`, `/_next/static/chunks/...`) 404ing.
+That means the local `.next` build cache got corrupted, usually from
+restarting the dev server mid-compile or having two `next dev` processes
+racing on the same directory. Fix: stop every `node`/`next dev` process for
+this project, delete the `.next` folder, and run `npm run dev` again — it's
+a local cache issue, not an app bug, and never touches the repo (`.next` is
+gitignored).
+
 ## Known gaps to close before shipping
 
 - `ScrambleText`'s Devanagari fallback relies on the browser/OS default font
